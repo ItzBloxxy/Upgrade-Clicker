@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .game-container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        #clicker-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #reset-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .upgrade-button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .upgrade-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Clicker Game</h1>
+        <button id="clicker-button">Click Me!</button>
+        <p id="score">Score: 0</p>
+        <button id="reset-button">Reset</button>
+        
+        <div class="upgrade-container">
+            <h2>Upgrades</h2>
+            <p>Click Power: <span id="click-power">1</span></p>
+            <button class="upgrade-button" id="upgrade-button">Upgrade Click Power (Cost: 10)</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const clickerButton = document.getElementById('clicker-button');
+            const resetButton = document.getElementById('reset-button');
+            const scoreDisplay = document.getElementById('score');
+            const clickPowerDisplay = document.getElementById('click-power');
+            const upgradeButton = document.getElementById('upgrade-button');
+
+            let score = 0;
+            let clickPower = 1;
+            const upgradeCost = 10;
+
+            function updateScore() {
+                scoreDisplay.textContent = `Score: ${score}`;
+            }
+
+            function updateClickPower() {
+                clickPowerDisplay.textContent = clickPower;
+                upgradeButton.textContent = `Upgrade Click Power (Cost: ${upgradeCost})`;
+            }
+
+            clickerButton.addEventListener('click', () => {
+                score += clickPower;
+                updateScore();
+            });
+
+            resetButton.addEventListener('click', () => {
+                score = 0;
+                clickPower = 1;
+                updateScore();
+                updateClickPower();
+            });
+
+            upgradeButton.addEventListener('click', () => {
+                if (score >= upgradeCost) {
+                    score -= upgradeCost;
+                    clickPower++;
+                    updateScore();
+                    updateClickPower();
+                } else {
+                    alert('Not enough score to upgrade!');
+                }
+            });
+
+            updateScore();
+            updateClickPower();
+        });
+    </script>
+</body>
+</html>
