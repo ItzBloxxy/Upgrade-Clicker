@@ -107,7 +107,6 @@
             let score = parseInt(localStorage.getItem('score')) || 0;
             let clickPower = parseInt(localStorage.getItem('clickPower')) || 1;
             let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 10;
-            const costIncrement = 2;
             const darkMode = localStorage.getItem('darkMode') === 'true';
 
             // Apply dark mode if it's enabled
@@ -137,7 +136,7 @@
                 if (score >= upgradeCost) {
                     score -= upgradeCost;
                     clickPower++;
-                    upgradeCost += costIncrement; // Increase the cost for the next upgrade
+                    upgradeCost *= 2; // Double the cost for the next upgrade
                     updateScore();
                     updateClickPower();
                 } else {
