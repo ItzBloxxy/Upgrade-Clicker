@@ -37,13 +37,6 @@
             border-radius: 5px;
         }
 
-        #reset-button {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-
         .upgrade-button {
             background-color: #2196F3;
             color: white;
@@ -66,7 +59,6 @@
         <h1>Clicker Game</h1>
         <button id="clicker-button">Click Me!</button>
         <p id="score">Score: 0</p>
-        <button id="reset-button">Reset</button>
         
         <div class="upgrade-container">
             <h2>Upgrades</h2>
@@ -77,34 +69,29 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const clickerButton = document.getElementById('clicker-button');
-            const resetButton = document.getElementById('reset-button');
             const scoreDisplay = document.getElementById('score');
             const clickPowerDisplay = document.getElementById('click-power');
             const upgradeButton = document.getElementById('upgrade-button');
 
-            let score = 0;
-            let clickPower = 1;
+            // Load game state from localStorage or initialize defaults
+            let score = parseInt(localStorage.getItem('score')) || 0;
+            let clickPower = parseInt(localStorage.getItem('clickPower')) || 1;
             const upgradeCost = 10;
 
             function updateScore() {
                 scoreDisplay.textContent = `Score: ${score}`;
+                localStorage.setItem('score', score);
             }
 
             function updateClickPower() {
                 clickPowerDisplay.textContent = clickPower;
                 upgradeButton.textContent = `Upgrade Click Power (Cost: ${upgradeCost})`;
+                localStorage.setItem('clickPower', clickPower);
             }
 
             clickerButton.addEventListener('click', () => {
                 score += clickPower;
                 updateScore();
-            });
-
-            resetButton.addEventListener('click', () => {
-                score = 0;
-                clickPower = 1;
-                updateScore();
-                updateClickPower();
             });
 
             upgradeButton.addEventListener('click', () => {
@@ -118,6 +105,7 @@
                 }
             });
 
+            // Initialize UI with saved data
             updateScore();
             updateClickPower();
         });
